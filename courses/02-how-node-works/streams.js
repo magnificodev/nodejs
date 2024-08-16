@@ -12,8 +12,12 @@ server.on("request", (req, res) => {
     // Solution 2: Stream
     // const readable = fs.createReadStream("./test-file.txt", "utf-8");
     // readable.on("data", (chunk) => {
-    //     res.write(chunk);
+    //     res.write(chunk)
     // });
+    
+    // res.on("drain", () => {
+    //     readable.resume();
+    // })
 
     // readable.on("end", () => {
     //     res.end();
