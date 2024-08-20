@@ -4,7 +4,7 @@ const superagent = require("superagent");
 const readFilePro = (file) => {
     return new Promise((resolve, reject) => {
         fs.readFile(file, "utf-8", (err, data) => {
-            if (err) reject(err);
+            if (err) reject("I cannot read that file, please check again!");
             resolve(data);
         });
     });
@@ -25,17 +25,40 @@ const getDogPic = async () => {
         const res = await superagent.get(
             `https://dog.ceo/api/breed/${data}/images/random`
         );
-        await writeFilePro("./image-links.txt", res.body.message)
+        await writeFilePro("./image-links.txt", res.body.message);
     } catch (err) {
-        console.log(err);
+        throw(err)
     }
+    return "Hello from getDogPic() function";
 };
-getDogPic()
+
+(async () => {
+    try {
+        const res = await getDogPic();
+        console.log(res)
+    }
+    catch (err) {
+        console.log(err)
+    }
+})()
+
+
+// Using async/await
+// getDogPic()
+//     .then((res) => console.log(res))
+//     .catch((err) => console.log(err));
+
+// console.log("Hello from Magnificodev outside of the box");
+
+
+// Using promises
 // readFilePro(`${__dirname}/dog.txt`)
 //     .then((data) => superagent.get(`https://dog.ceo/api/breed/${data}/images/random`))
 //     .then(res => writeFilePro("./image-links.txt", res.body.message))
 //     .then(data => console.log(data))
 //     .catch((err) => console.log(err.message));
+
+
 
 // Normal way
 // fs.readFile(`${__dirname}/dog.txt`, "utf-8", (err, data) => {
